@@ -1,0 +1,35 @@
+{
+  "name": "isc2026",
+  "version": "1.0.0",
+  "description": "International Scientific Conference Portal",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "node server.js",
+    "client": "cd ../frontend/conference-portal && npm run dev",
+    "build": "cd ../frontend/conference-portal && npm run build",
+    "seed": "node seed.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "conference",
+    "scientific",
+    "portal",
+    "react",
+    "express"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "canvas": "^3.2.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^5.2.1",
+    "mongoose": "^8.23.0",
+    "qrcode": "^1.5.4"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

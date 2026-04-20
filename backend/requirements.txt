@@ -1,0 +1,25 @@
+# ISC2026 Backend Dependencies
+
+# Core Framework
+express==5.2.1
+
+# Database
+mongoose==8.23.0
+
+# Environment Variables
+dotenv==16.3.1
+
+# CORS
+cors==2.8.5
+
+# Image Processing (for certificate generation)
+canvas==3.2.3
+
+# QR Code Generation (if needed in future)
+qrcode==1.5.4
+
+# Development Tools
+concurrently==8.2.2
+
+
+# To install: npm install
