@@ -57,7 +57,7 @@ export const registrationAPI = {
   
   // Check registration status
   checkRegistrationStatus: (email) => 
-    apiRequest(`/certificates/status?email=${encodeURIComponent(email)}`),
+    apiRequest(`/registration/status?email=${encodeURIComponent(email)}`),
 };
 
 // Papers API functions
@@ -85,14 +85,13 @@ export const papersAPI = {
 export const certificateAPI = {
   // Generate certificate preview
   generatePreview: (certificateData) => 
-    apiRequest('/certificate/preview', {
-      method: 'POST',
-      body: JSON.stringify(certificateData),
+    apiRequest('/certificates/preview', {
+      method: 'GET',
     }),
   
   // Create certificate
   createCertificate: (certificateData) => 
-    apiRequest('/certificate', {
+    apiRequest('/certificates/create', {
       method: 'POST',
       body: JSON.stringify(certificateData),
     }),
@@ -117,10 +116,100 @@ export const speakersAPI = {
     apiRequest(`/speakers/${id}`),
 };
 
+// Admin API functions
+export const adminAPI = {
+  // Authentication
+  login: (credentials) => 
+    apiRequest('/admin/login', {
+      method: 'POST',
+      body: JSON.stringify(credentials),
+    }),
+  
+  // Dashboard
+  getDashboardStats: () => apiRequest('/admin/dashboard-stats'),
+  
+  // Conference management
+  getConference: () => apiRequest('/admin/conference'),
+  updateConference: (conferenceData) => 
+    apiRequest('/admin/conference', {
+      method: 'PUT',
+      body: JSON.stringify(conferenceData),
+    }),
+  
+  // Certificate template management
+  uploadCertificateTemplate: (formData) => {
+    const config = {
+      method: 'POST',
+      body: formData, // Don't stringify FormData
+      headers: {}, // Let browser set Content-Type for FormData
+    };
+    return apiRequest('/admin/certificate-template', config);
+  },
+  getCertificateTemplate: () => apiRequest('/admin/certificate-template'),
+  replaceCertificateTemplate: (formData) => {
+    const config = {
+      method: 'PUT',
+      body: formData,
+      headers: {},
+    };
+    return apiRequest('/admin/certificate-template', config);
+  },
+  
+  // Speaker management
+  getAllSpeakers: () => apiRequest('/admin/speakers'),
+  createSpeaker: (speakerData) => 
+    apiRequest('/admin/speakers', {
+      method: 'POST',
+      body: JSON.stringify(speakerData),
+    }),
+  updateSpeaker: (id, speakerData) => 
+    apiRequest(`/admin/speakers/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(speakerData),
+    }),
+  deleteSpeaker: (id) => 
+    apiRequest(`/admin/speakers/${id}`, {
+      method: 'DELETE',
+    }),
+  
+  // Registration management
+  getAllRegistrations: () => apiRequest('/admin/registrations'),
+  updateRegistrationStatus: (id, status) => 
+    apiRequest(`/admin/registrations/${id}/status`, {
+      method: 'PUT',
+      body: JSON.stringify({ status }),
+    }),
+  markAttendance: (id, attended) => 
+    apiRequest(`/admin/registrations/${id}/attendance`, {
+      method: 'PUT',
+      body: JSON.stringify({ attended }),
+    }),
+  
+  // Paper management
+  getAllPapers: () => apiRequest('/admin/papers'),
+  updatePaperStatus: (id, status) => 
+    apiRequest(`/admin/papers/${id}/status`, {
+      method: 'PUT',
+      body: JSON.stringify({ status }),
+    }),
+  getPapersByStatus: (status) => apiRequest(`/admin/papers/status/${status}`),
+};
+
+// Feedback API functions
+export const feedbackAPI = {
+  submitFeedback: (feedbackData) => 
+    apiRequest('/feedback', {
+      method: 'POST',
+      body: JSON.stringify(feedbackData),
+    }),
+};
+
 export default {
   conferenceAPI,
   registrationAPI,
   papersAPI,
   certificateAPI,
   speakersAPI,
+  adminAPI,
+  feedbackAPI,
 };
